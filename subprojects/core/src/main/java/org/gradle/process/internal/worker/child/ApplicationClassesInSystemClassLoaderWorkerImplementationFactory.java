@@ -204,6 +204,7 @@ public class ApplicationClassesInSystemClassLoaderWorkerImplementationFactory im
         if (!classpath.isEmpty()) {
             argumentList.addAll(Arrays.asList("-cp", Joiner.on(File.pathSeparator).join(classpath)));
         }
+        argumentList.add("-Dgroovy.antlr4=false");
         return ArgWriter.argsFileGenerator(optionsFile, ArgWriter.javaStyleFactory()).transform(argumentList);
     }
 }
