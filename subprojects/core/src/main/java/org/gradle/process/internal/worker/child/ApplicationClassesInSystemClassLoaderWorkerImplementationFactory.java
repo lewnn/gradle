@@ -205,7 +205,7 @@ public class ApplicationClassesInSystemClassLoaderWorkerImplementationFactory im
         if (!classpath.isEmpty()) {
             argumentList.addAll(Arrays.asList("-cp", Joiner.on(File.pathSeparator).join(classpath)));
         }
-        argumentList.addAll(JpmsConfiguration.WORKER_JPMS_JVM_ARGS);
+        argumentList.addAll(JpmsConfiguration.GRADLE_WORKER_JPMS_ARGS);
         return ArgWriter.argsFileGenerator(optionsFile, ArgWriter.javaStyleFactory()).transform(argumentList);
     }
 }

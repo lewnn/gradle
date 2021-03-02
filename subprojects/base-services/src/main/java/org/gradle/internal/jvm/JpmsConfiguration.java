@@ -29,35 +29,35 @@ import java.util.List;
  */
 public class JpmsConfiguration {
 
-    public static final List<String> GROOVY_JPMS_JVM_ARGS = Collections.unmodifiableList(Arrays.asList(
+    public static final List<String> GROOVY_JPMS_ARGS = Collections.unmodifiableList(Arrays.asList(
         "--add-opens", "java.base/java.lang=ALL-UNNAMED",
         "--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED",
         "--add-opens", "java.base/java.util=ALL-UNNAMED",
         "--add-opens", "java.prefs/java.util.prefs=ALL-UNNAMED" // required by PreferenceCleaningGroovySystemLoader
     ));
 
-    private static final List<String> CONFIGURATION_CACHE_JPMS_JVM_ARGS = Collections.unmodifiableList(Arrays.asList(
-        "--add-opens", "java.prefs/java.util.prefs=ALL-UNNAMED", // required by JavaObjectSerializationCodec.kt
-        "--add-opens", "java.base/java.nio.charset=ALL-UNNAMED", // required by BeanSchemaKt
-        "--add-opens", "java.base/java.net=ALL-UNNAMED" // required by JavaObjectSerializationCodec
-    ));
-
-    public static final List<String> WORKER_JPMS_JVM_ARGS = Collections.unmodifiableList(Arrays.asList(
+    public static final List<String> GRADLE_WORKER_JPMS_ARGS = Collections.unmodifiableList(Arrays.asList(
         "--add-opens", "java.base/java.util=ALL-UNNAMED", // required by native platform: WrapperProcess.getEnv
         "--add-opens", "java.base/java.lang=ALL-UNNAMED" // required by ClassLoaderUtils
     ));
 
-    public static final List<String> GRADLE_DAEMON_JPMS_JVM_ARGS;
+    public static final List<String> GRADLE_DAEMON_JPMS_ARGS;
 
     static {
-        List<String> daemonJpmsJvmArgs = new ArrayList<String>();
-        daemonJpmsJvmArgs.addAll(GROOVY_JPMS_JVM_ARGS);
-        daemonJpmsJvmArgs.addAll(CONFIGURATION_CACHE_JPMS_JVM_ARGS);
+        List<String> gradleDaemonJvmArgs = new ArrayList<String>();
+        gradleDaemonJvmArgs.addAll(GROOVY_JPMS_ARGS);
+
+        List<String> configurationCacheJpmsArgs = Collections.unmodifiableList(Arrays.asList(
+            "--add-opens", "java.prefs/java.util.prefs=ALL-UNNAMED", // required by JavaObjectSerializationCodec.kt
+            "--add-opens", "java.base/java.nio.charset=ALL-UNNAMED", // required by BeanSchemaKt
+            "--add-opens", "java.base/java.net=ALL-UNNAMED" // required by JavaObjectSerializationCodec
+        ));
+        gradleDaemonJvmArgs.addAll(configurationCacheJpmsArgs);
 
         // Workaround until external kotlin-dsl plugins support JDK16 properly
         // https://youtrack.jetbrains.com/issue/KT-43704 - should be in 1.5.x line
-        daemonJpmsJvmArgs.add("-Dkotlin.daemon.jvm.options=--illegal-access=permit");
+        gradleDaemonJvmArgs.add("-Dkotlin.daemon.jvm.options=--illegal-access=permit");
 
-        GRADLE_DAEMON_JPMS_JVM_ARGS = Collections.unmodifiableList(daemonJpmsJvmArgs);
+        GRADLE_DAEMON_JPMS_ARGS = Collections.unmodifiableList(gradleDaemonJvmArgs);
     }
 }

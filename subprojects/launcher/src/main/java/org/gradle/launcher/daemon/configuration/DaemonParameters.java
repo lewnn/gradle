@@ -126,7 +126,7 @@ public class DaemonParameters {
     public void applyDefaultsFor(JavaVersion javaVersion) {
         if (javaVersion.compareTo(JavaVersion.VERSION_1_9) >= 0) {
             jvmOptions.jvmArgs(ALLOW_ENVIRONMENT_VARIABLE_OVERWRITE);
-            jvmOptions.jvmArgs(JpmsConfiguration.GRADLE_DAEMON_JPMS_JVM_ARGS);
+            jvmOptions.jvmArgs(JpmsConfiguration.GRADLE_DAEMON_JPMS_ARGS);
         }
         if (hasJvmArgs) {
             return;

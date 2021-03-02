@@ -97,7 +97,7 @@ public class DaemonGroovyCompiler extends AbstractDaemonCompiler<GroovyJavaJoint
         javaForkOptions.setWorkingDir(daemonWorkingDir);
         javaForkOptions.setExecutable(javaOptions.getExecutable());
         if (jvmVersionDetector.getJavaVersion(javaForkOptions.getExecutable()).isJava9Compatible()) {
-            javaForkOptions.jvmArgs(JpmsConfiguration.GROOVY_JPMS_JVM_ARGS);
+            javaForkOptions.jvmArgs(JpmsConfiguration.GROOVY_JPMS_ARGS);
         }
 
         return new DaemonForkOptionsBuilder(forkOptionsFactory)
